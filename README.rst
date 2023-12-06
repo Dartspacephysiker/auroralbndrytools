@@ -1,3 +1,5 @@
+|DOI| 
+
 Overview
 ========
 
@@ -9,9 +11,9 @@ A set of tools for for creating a continuous representation of auroral boundarie
 Installation
 ------------
 
-Using pip (NOT CURRENTLY POSSIBLE)::
+Using pip ::
 
-    pip install auroralbndrytools 
+    pip install --editable "auroralbndrytools @ git+https://github.com/Dartspacephysiker/auroralbndrytools.git@main"
 
 
 Dependencies:
@@ -43,6 +45,10 @@ Dependencies:
 
 References
 ----------
-Derivation of equations by SMH here: https://essopenarchive.org/doi/full/10.22541/essoar.169447428.84472457/v1
+Derivation of equations for boundary normal velocity by SMH in appendix here: https://essopenarchive.org/doi/full/10.22541/essoar.169447428.84472457/v1
 
-..
+Equations and auroralbndrytools also used by Gasparini et al (in preparation)
+
+
+.. |DOI| image:: https://zenodo.org/badge/728155056.svg
+        :target: https://zenodo.org/badge/latestdoi/728155056

@@ -7,7 +7,7 @@ authors:
 title: "auroral boundary tools"
 identifiers:
   - type: doi
-    value: 
+    value: 10.5281/zenodo.10277037
     description:  auroralbndrytools - First release
 version: v0.1
 date-released: 2023-12-06
