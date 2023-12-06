@@ -1,0 +1,54 @@
+[build-system]
+requires = ["setuptools >= 64", "setuptools_scm[toml]"]
+build-backend = "setuptools.build_meta"
+
+[project.urls]
+repository = "https://github.com/Dartspacephysiker/auroralbndrytools"
+
+[project]
+name = "auroralbndrytools"
+dynamic = ["version"]
+authors = [
+    { name = "Spencer M. Hatch", email = "spencer.hatch@uib.no" }
+]
+description = "Tools for getting a continuous representation of auroral boundaries and the motion of the auroral boundary from a set of points"
+readme = "README.rst"
+
+maintainers = [
+    { name = "Spencer M. Hatch", email = "spencer.hatch@uib.no" },
+]
+license = { file = "LICENSE" }
+requires-python = ">=3.7"
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Development Status :: 4 - Beta",
+]
+dependencies = [
+    "numpy >= 1.14",
+    "future >= 0.16",
+    "scipy >= 0.9",
+    "toolz >= 0.8",
+    "pandas >= 0.20",
+    "apexpy >= 1.0",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest >=6",
+]
+dev = [
+    "pytest >=6",
+    "Sphinx",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src"]
+
+[tool.setuptools_scm]

@@ -1,0 +1,14 @@
+cff-version: 1.1.0
+message: "If you use this software, please cite it as below."
+authors:
+- given-names: Spencer Mark
+  family-names: Hatch
+  orcid: https://orcid.org/0000-0001-7412-4936
+title: "auroral boundary tools"
+identifiers:
+  - type: doi
+    value: 
+    description:  auroralbndrytools - First release
+version: v0.1
+date-released: 2023-12-06
+                          
