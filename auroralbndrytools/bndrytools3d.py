@@ -62,7 +62,7 @@ class ABoundary(object):
                  apex_refh=110,
                  enable_mlt_safety_check=True,
                  discontinuity_MLT=24,
-                 verbose=True):
+                 verbose=False):
         """
         INPUTS
         =======
@@ -455,12 +455,14 @@ class ABoundary(object):
     def get_velocity(self, *args,
                      refh=110,
                      coordsys='geodetic',
-                     DEBUG=False,
                      return_ENU=True,
                      uncertainty_theta_deg=None,
                      uncertainty_R_km=None,
                      unc_corr_t=None,
-                     unc_corr_phi=None):
+                     unc_corr_phi=None,
+                     verbose=False,
+                     DEBUG=False,
+):
         """
         Taking this ABoundary object as t0 and the other objs as the other times, calculate 
         the boundary velocity (if possible) using an analytic expression for each lt in lts
@@ -617,9 +619,11 @@ class ABoundary(object):
         # to calculate boundary velocity
         est = get_velocity_general_analytic(lts, abobjs, coeffs, dt,
                                             refh=refh,
-                                            DEBUG=DEBUG,
                                             return_ENU=return_ENU,
-                                            uncertainty_info=uncertainty_info)
+                                            uncertainty_info=uncertainty_info,
+                                            verbose=verbose,
+                                            DEBUG=DEBUG,
+        )
 
         return est
 
@@ -1081,7 +1085,7 @@ def get_glon_from_lt(dts, lts):
         glons = ((lts * 15) +sslon-180) % 360
     except:
         #put a breakpoint here
-        print("DAD")
+        print("PROBLEM")
         breakpoint()
 
     return glons
@@ -1091,6 +1095,7 @@ def get_velocity_general_analytic(lts, abobjs, coeffs, dt, refh=110,
                                   DEBUG=False,
                                   return_ENU=True,
                                   uncertainty_info=[],
+                                  verbose=False,
 ):
     """
     Get boundary normal velocity in spherical (<r, theta, phi>) coordinates
@@ -1129,8 +1134,9 @@ def get_velocity_general_analytic(lts, abobjs, coeffs, dt, refh=110,
 
     assert len(uncertainty_info) <= 4,"'uncertainty_info' list should be no more than four elements long: uncertainty_info = [Dtheta_deg, DR_km, rho_t, rho_lon]"
 
-    print("UNCERTAINTY INFO:")
-    print(uncertainty_info)
+    if verbose:
+        print("UNCERTAINTY INFO:")
+        print(uncertainty_info)
 
     R = (RE+refh)*1000          # Ref height in meters
     nAngle = len(lts)
@@ -1286,6 +1292,7 @@ def get_velocities_from_abobj_list(mlts,abobjs,
                                    max_order_ctr=2,
                                    return_ENU=True,
                                    return_usescheme=False,
+                                   verbose=False,
                                    DEBUG=False):
     
     ALLOWED_GEN_SCHEMES = ['fwd','bkwd','ctr']
@@ -1337,7 +1344,9 @@ def get_velocities_from_abobj_list(mlts,abobjs,
 
     for refidx in range(nabobj):
     
-        print(f"refidx = {refidx:02d}")
+        if verbose:
+            print(f"refidx = {refidx:02d}")
+
         out = dict()
         ab_t0 = abobjs[refidx]
         
@@ -1375,8 +1384,12 @@ def get_velocities_from_abobj_list(mlts,abobjs,
 
 
 def get_schemenames_from_abobj_list(mlts,abobjs,
+                                    verbose=False,
                                     DEBUG=False):
     
+    if verbose or DEBUG:
+        print("Executing get_schemenames_from_abobj_list")
+
     nabobj = len(abobjs)
     canschemeslist = []             # Keep track of which schemes are possible
     schemedictlist = []             # List of abobjs to feed to abobj.get_velocity
@@ -1385,7 +1398,8 @@ def get_schemenames_from_abobj_list(mlts,abobjs,
     
         canschemes = []             # Keep track of which schemes are possible
         schemedict = dict()
-        print(f"refidx = {refidx:02d}")
+        if verbose:
+            print(f"refidx = {refidx:02d}")
         ab_t0 = abobjs[refidx]
         
         # aur boundary at t = t_0-dt ("t minus one")

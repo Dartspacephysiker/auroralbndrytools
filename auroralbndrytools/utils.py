@@ -36,7 +36,7 @@ def subsol(datetimes):
 
     year = np.array(datetimes.year)
     # day of year:
-    doy  = date_to_doy(datetimes.month, datetimes.day, dates.is_leapyear(year))
+    doy  = date_to_doy(datetimes.month, datetimes.day, is_leapyear(year))
     # seconds since start of day:
     ut   = datetimes.hour * 60.**2 + datetimes.minute*60. + datetimes.second 
  
@@ -162,3 +162,36 @@ def date_to_doy(month, day, leapyear = False):
     doy[month >= 3] = doy[month >= 3] + leapyear[month >= 3]
 
     return doy.reshape(shape)
+
+
+def is_leapyear(year):
+    """ Return True if leapyear else False
+    
+        handles arrays (preserves shape).
+
+        KML 2016-04-20
+    """
+
+    # if array:
+    if type(year) is np.ndarray:
+        out = np.full_like(year, False, dtype = bool)
+
+        out[ year % 4   == 0] = True
+        out[ year % 100 == 0] = False
+        out[ year % 400 == 0] = True
+
+        return out
+
+    # if scalar:
+    if year % 400 == 0:
+        return True
+
+    if year % 100 == 0:
+        return False
+
+    if year % 4 == 0:
+        return True
+
+    else:
+        return False
+

@@ -49,6 +49,6 @@ dev = [
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["src"]
+include = ["auroralbndrytools"]
 
 [tool.setuptools_scm]
